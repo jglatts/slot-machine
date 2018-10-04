@@ -5,7 +5,7 @@
 
 /* Function prototypes */
 int get_random_number(int);
-void slot_roll(int, int, int);
+int slot_roll(int, int, int);
 void slot_results_check(int, int, int);
 
 int main()
@@ -13,19 +13,11 @@ int main()
     /* This line provides a seed to the random number generator allowing
      pseudo-random numbers to be generated */
     srand(time(NULL)); // time(NULL) gives us the current time in seconds
-    char play_again;
-    int i = 0; //variable used to check how many times game has been played
 
 
-    // do-while loop to see if we should continue the game
-    do {
-        printf("========Slot Machine========\n\n");
-        printf("==========================\n\n");
-        slot_roll(6, 6, 6);
-        printf("Press ENTER to play again or enter X to quit\n");
-        scanf("%c", &play_again);
-        i++; //increment by one everytime the player starts a new game
-    } while (play_again != 'x' && play_again != 'X');
+    printf("========Slot Machine========\n");
+    printf("============================\n\n");
+    slot_roll(6, 6, 6);
 
     return 0;
 }
@@ -38,33 +30,47 @@ int get_random_number(int max){
 
 
 /* Displays the slot results, then pass the results to slot_result_check to check for matches */
-void slot_roll(int slot_1, int slot_2, int slot_3){
-    int random_number_1, random_number_2, random_number_3;
+int slot_roll(int slot_1, int slot_2, int slot_3){
+    int random_number_1, random_number_2, random_number_3, jackpot_wins = 0, two_wins = 0, games_played = 0;
+    char play_again;
 
-    random_number_1 = get_random_number(slot_1);
-    random_number_2 = get_random_number(slot_2);
-    random_number_3 = get_random_number(slot_3);
-    printf("*****\n");
-    printf("* %d *\n", random_number_1);
-    printf("*****\n");
-    printf("*****\n");
-    printf("* %d *\n", random_number_2);
-    printf("*****\n");
-    printf("*****\n");
-    printf("* %d *\n", random_number_3);
-    printf("*****\n");
-    slot_results_check(random_number_1, random_number_2, random_number_3);
-}
+    do{ 
+        random_number_1 = get_random_number(slot_1);
+        random_number_2 = get_random_number(slot_2);
+        random_number_3 = get_random_number(slot_3);
+        
+        printf("*****\n");
+        printf("* %d *\n", random_number_1);
+        printf("*****\n");
+        printf("*****\n");
+        printf("* %d *\n", random_number_2);
+        printf("*****\n");
+        printf("*****\n");
+        printf("* %d *\n", random_number_3);
+        printf("*****\n");
+        
+        if(random_number_1 == random_number_2 && random_number_1 == random_number_3){
+            printf("\nYOU'VE WON JACKPOT!!!\n");
+            jackpot_wins ++ ;
+        }
+        else if(random_number_1 == random_number_2 || random_number_1 == random_number_3 || random_number_2 == random_number_3){
+            printf("\nYou've Matched two numbers!!!\n");
+            two_wins ++ ;
+        }
+        else{
+            printf("\nNo Matches\n");
+        }
 
-void slot_results_check(int number_1, int number_2, int number_3){
-    // Check to see if user has made jackpot, two matches, or no matches
-    if(number_1 == number_2 && number_1 == number_3){
-        printf("\nYOU'VE WON JACKPOT!!!\n");
-    }
-    else if(number_1 == number_2 || number_1 == number_3 || number_2 == number_3){
-        printf("\nYou've Matched 2!!!\n");
-    }
-    else{
-        printf("\nNo Matches\n");
-    }
+        printf("Press ENTER to play again or enter X to quit\n");
+        scanf("%c", &play_again);
+        games_played ++ ;
+        
+    } while (play_again != 'x' && play_again != 'X');
+        printf("\n======================\n");
+        printf("JACKPOTS: %d\n", jackpot_wins );
+        printf("TWO MATCH WINS: %d\n", two_wins );
+        printf("GAMES PLAYED: %d\n", games_played );
+        printf("======================\n");
+
+        return 1;
 }
