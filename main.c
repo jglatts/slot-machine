@@ -32,7 +32,7 @@ int get_random_number(int max){
 /* Displays the slot results, then pass the results to slot_result_check to check for matches */
 int slot_roll(int slot_1, int slot_2, int slot_3){
     int random_number_1, random_number_2, random_number_3, jackpot_wins = 0, two_wins = 0, games_played = 0;
-    char play_again;
+    int play_again;
 
     do{ 
         random_number_1 = get_random_number(slot_1);
@@ -61,11 +61,11 @@ int slot_roll(int slot_1, int slot_2, int slot_3){
             printf("\nNo Matches\n");
         }
 
-        printf("Press ENTER to play again or enter X to quit\n");
+        printf("Press ENTER to play again or enter 1 to quit\n");
         scanf("%c", &play_again);
         games_played ++ ;
         
-    } while (play_again != 'x' && play_again != 'X');
+    } while (play_again != 1 && play_again != 1);
         printf("\n======================\n");
         printf("JACKPOTS: %d\n", jackpot_wins );
         printf("TWO MATCH WINS: %d\n", two_wins );
